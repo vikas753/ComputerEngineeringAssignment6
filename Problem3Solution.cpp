@@ -32,9 +32,8 @@ public:
 
 bool operator<(const huffmanEncDataStruct& Node1,const huffmanEncDataStruct& Node2)
 {
-  return (Node1.frequency > Node2.frequency);
+  return (Node1.frequency >= Node2.frequency);
 }
-
 
 // Priority Queue type , with an overload operator
 priority_queue<huffmanEncDataStruct> HuffmanPQueueData;
@@ -98,24 +97,25 @@ void DisplayHuffmanCodeWrapper(huffmanEncDataStruct root)
 // Display Huffman Codes for all Nodes
 void DisplayHuffmanCode(huffmanEncDataStruct root,string PreviousPath)
 {
+ 
+  string PreviousPathLeft = PreviousPath + "0";
+  string PreviousPathRight = PreviousPath + "1";
+ 
+  if(root.lhchildidx != INVALID_CHILD_IDX )
+  {
+    DisplayHuffmanCode(NodeObjs[root.lhchildidx],PreviousPathLeft);
+  }
+
+  if(root.rhchildidx != INVALID_CHILD_IDX)
+  {
+    DisplayHuffmanCode(NodeObjs[root.rhchildidx],PreviousPathRight);
+  }
 
   if(root.letter!= PARENT_CHAR)
   {
     cout << " Huffman code for charachter : " << root.letter << " is : " << PreviousPath << endl;
   }
-  
-  if(root.lhchildidx != INVALID_CHILD_IDX )
-  {
-    PreviousPath = PreviousPath + "0";
-    DisplayHuffmanCode(NodeObjs[root.lhchildidx],PreviousPath);
-  }
-
-  if(root.rhchildidx != INVALID_CHILD_IDX)
-  {
-    PreviousPath = PreviousPath + "1";
-    DisplayHuffmanCode(NodeObjs[root.rhchildidx],PreviousPath);
-  }
-
+ 
   return;
   
 }
